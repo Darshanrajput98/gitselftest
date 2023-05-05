@@ -1,0 +1,21 @@
+name: Test Workflow
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+steps:
+  - uses: actions/checkout@v2
+
+    - name: copy file to server
+    run: |
+       sudo rsync -av --exclude='.htaccess' ./ /var/www/html
+
+  - name: Update Directory Permissions
+    run: |
+         sudo chmod 777 /var/www/html/*
+         
