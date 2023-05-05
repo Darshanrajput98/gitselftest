@@ -18,6 +18,6 @@ jobs:
         run: sudo rsync -av --exclude='.htaccess' ./ /var/www/html
       - name: Update Directory Permissions
         run: |
-          sudo chmod 777 /var/www/html/uploads/*
-          sudo chmod 777 /var/www/html/uploads/import
+          sudo chmod 777 /var/www/html/*
+          
     
