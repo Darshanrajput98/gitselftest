@@ -1,20 +1,23 @@
-name: Test Workflow
+name: test-deployer
 
 on:
   push:
-    branches: ["master"]
+    branches: [ master ]
+#  pull_request:
+#    branches: [ main ]
+
+  workflow_dispatch:
 
 jobs:
-  build:
+  # This workflow will run inside the prod server and will deploy the application
+  deploy-to-server:
     runs-on: self-hosted
-      steps:
-        - uses: actions/checkout@v2
-
-        - name: copy file to server
-          run: |
-            sudo rsync -av --exclude='.htaccess' ./ /var/www/html
-
-       - name: Update Directory Permissions
-          run: |
-            sudo chmod 777 /var/www/html/*
-         
+    steps:
+      - uses: actions/checkout@v2
+      - name: copy files to server
+        run: sudo rsync -av --exclude='.htaccess' ./ /var/www/html
+      - name: Update Directory Permissions
+        run: |
+          sudo chmod 777 /var/www/html/uploads/*
+          sudo chmod 777 /var/www/html/uploads/import
+    
